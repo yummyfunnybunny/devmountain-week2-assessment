@@ -9,6 +9,19 @@
 // should switch from "Log Out" to "Log In".
 
 /// TODO: replace this with your code
+const button = document.querySelector("#auth");
+
+let loggedIn = false;
+
+button.addEventListener("click", (event) => {
+  console.log("clicked");
+
+  loggedIn === false ? (loggedIn = true) : (loggedIn = false);
+
+  loggedIn === false
+    ? (event.target.innerText = "Log in")
+    : (event.target.innerText = "Log out");
+});
 
 // Send an alert
 //
@@ -18,6 +31,15 @@
 // text box. Then, they can submit the form to trigger the alert.
 
 /// TODO: replace this with your code
+const alertForm = document.querySelector("#send-alert");
+const alertInput = document.querySelector("#alert-message");
+
+alertForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  const message = alertInput.value;
+  alert(message);
+  alertInput.value = "";
+});
 
 // Add an item
 //
@@ -35,6 +57,14 @@
 //   </ol>
 
 /// TODO: replace this with your code
+const addItemButton = document.querySelector("#item-adder");
+const itemList = document.querySelector("#list");
+
+addItemButton.addEventListener("dblclick", (event) => {
+  const newItem = document.createElement("li");
+  newItem.innerText = "Item";
+  itemList.appendChild(newItem);
+});
 
 // Change colors
 //
@@ -46,6 +76,21 @@
 // Stuff Blue" should make text blue.
 
 /// TODO: replace this with your code
+const colorChangers = document.querySelectorAll(".changes-colors");
+const blueButton = document.querySelector("#blue");
+const redButton = document.querySelector("#red");
+
+blueButton.addEventListener("click", (event) => {
+  colorChangers.forEach((node) => {
+    node.className = "blue-text";
+  });
+});
+
+redButton.addEventListener("click", (event) => {
+  colorChangers.forEach((node) => {
+    node.className = "red-text";
+  });
+});
 
 // Calculate factorial
 //
@@ -63,6 +108,28 @@
 //   - puts the result of the function inside the "result" span
 
 /// TODO: replace this with your code
+const factorialInput = document.querySelector("#factorial-input");
+const factorialForm = document.querySelector("#factorial-calculator");
+const factorialResult = document.querySelector("#result");
+
+factorialForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  const userInput = factorialInput.value;
+  let factorialProduct = 1;
+  if (userInput != "" && Number(userInput) != NaN && Number(userInput) > 0) {
+    let iteration = Number(userInput);
+    while (iteration > 1) {
+      factorialProduct *= iteration;
+      iteration--;
+    }
+  } else {
+    alert("Invalid input. Please try again!");
+    factorialInput.value = "";
+  }
+
+  factorialResult.innerText = factorialProduct;
+  factorialInput.value = "";
+});
 
 // Validate a form
 //
@@ -80,3 +147,21 @@
 // change the color of the text to red..
 
 /// TODO: replace this with your code
+const recommendForm = document.querySelector("#recommend-word");
+const recommendInput = document.querySelector("#word");
+const formFeedback = document.querySelector(".form-feedback");
+
+recommendForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  const word = recommendInput.value;
+
+  if (word.length > 3) {
+    formFeedback.innerText = "Thanks for your submission!";
+    formFeedback.style.color = "green";
+  } else {
+    formFeedback.innerText = "The word must be at least 4 characters long.";
+    formFeedback.style.color = "red";
+  }
+
+  recommendInput.value = "";
+});

@@ -32,71 +32,38 @@
 //   buildWordChain(['zoo', 'sour', 'racket', 'octos']);
 //   => ['zoo', 'octos', 'sour', 'racket']
 function buildWordChain(words) {
-  const wordCount = words.length;
+  // initialize variables
+  let iterationCounter = 1;
+
+  // check for non-empty array of words
   const orderedWords = [];
+  if (!words.length > 0) {
+    return orderedWords;
+  }
+  orderedWords.push(words.shift());
 
-  for (let i = 0; i < words.length; i++) {
-    // save first word
-    if (i === 0) {
-      orderedWords.push(words[i]);
-      words.shift();
-    } else {
-      // Find next word in sequence
-      console.log(words);
+  // stop condition
+  while (words.length > 0 && iterationCounter <= 2) {
+    for (let i = 0; i < words.length; i++) {
+      let currentWord = words[i];
+      let lastOrderedWord = orderedWords[orderedWords.length - 1];
+
+      let lastLetter = lastOrderedWord[lastOrderedWord.length - 1];
+
+      let firstLetter = currentWord[0];
+
+      // We found the next word!
+      if (lastLetter === firstLetter) {
+        let matchingWord = words.splice(i, 1);
+        orderedWords.push(matchingWord[0]);
+      }
+      // got to the end without finding another match: break and end
+      if (i === words.length - 1) {
+        iterationCounter++;
+      }
     }
   }
+  return orderedWords;
 }
-
-function buildWordChain2(words) {
-  console.log(words);
-  const wordsCopy = words;
-
-  // check for empty array
-  if (words.length === 0) return [];
-
-  const newOrder = [];
-  // newOrder.push(words[0]);
-
-  let firstWord = words[0];
-  console.log(firstWord);
-
-  let lastLetter = firstWord[firstWord.length - 1];
-  console.log(lastLetter);
-
-  let currentWord = "";
-
-  for (var i = 0; i < words.length; i++) {
-    currentWord = words[i];
-
-    if (i === 0) {
-      newOrder.push(words[i]);
-      lastLetter = currentWord[currentWord.length - 1];
-      wordsCopy.shift();
-    } else if (currentWord[0] === lastLetter) {
-      newOrder.push(words[i]);
-      lastLetter = currentWord[currentWord.length - 1];
-      wordsCopy.shift();
-    }
-  }
-
-  for (let i = 0; i < wordsCopy.length; i++) {
-    currentWord = wordsCopy[i];
-    if (currentWord[0] === lastLetter) {
-      newOrder.push(words[i]);
-      lastLetter = currentWord[currentWord.length - 1];
-    }
-  }
-  console.log(newOrder);
-  return newOrder;
-}
-
-// Recursively
-// function buildWordChain3(words) {
-//   if (words.length === 1) {
-//     // last iteration, stop the recursion
-//   } else {
-//     for (var i = 0; i < words.length; i++) {}
-//   }
-// }
 
 export { buildWordChain };
